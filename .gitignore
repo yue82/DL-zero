@@ -1,3 +1,4 @@
 ref/*
-dataset/*
+dataset/*.pkl
+dataset/*.gz
 *.pyc
