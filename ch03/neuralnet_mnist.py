@@ -34,15 +34,31 @@ def predict(network, x):
 
     return y
 
-
-if __name__ == '__main__':
-    x, t = get_data()
-    network = init_network()
-
+def normal_pred(x, t):
     accuracy_cnt = 0
     for i in range(len(x)):
         y = predict(network, x[i])
         p = np.argmax(y)
         if p == t[i]:
             accuracy_cnt += 1
-    print('Accuracy: ' + str(float(accuracy_cnt) / len(x)))
+    return accuracy_cnt
+
+
+def batch_pred(x, t, batch_size=100):
+    accuracy_cnt = 0
+    for i in range(0, len(x), batch_size):
+        x_batch = x[i:i+batch_size]
+        y_batch = predict(network, x_batch)
+        p = np.argmax(y_batch, axis=1)
+        accuracy_cnt += np.sum(p == t[i:i+batch_size])
+    return accuracy_cnt
+
+
+if __name__ == '__main__':
+    x, t = get_data()
+    network = init_network()
+
+    normal_acc = normal_pred(x, t)
+    batch_acc = batch_pred(x, t, batch_size=100)
+    print('Accuracy: ' + str(float(normal_acc) / len(x)))
+    print('Accuracy(batch_size=100): ' + str(float(batch_acc) / len(x)))
