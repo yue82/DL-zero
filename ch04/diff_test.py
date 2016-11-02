@@ -9,8 +9,10 @@ def plt_tangent(x, y, tangent, save=False, filename='test.png'):
     plt.xlabel("x")
     plt.ylabel("f(x)")
 
-    plt.plot(x, y)
-    plt.plot(x, tangent)
+    plt.plot(x, y, label='func1')
+    plt.plot(x, tangent, label='tangent line')
+
+    plt.legend()
 
     if save:
         plt.savefig(filename)
