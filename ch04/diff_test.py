@@ -18,8 +18,8 @@ def plt_tangent(x, y, tangent, save=False, filename='test.png'):
         plt.show()
 
 
-def tangent_line(f, x, a):
-    b = f(x) - a * x  # f(t) = a * x + b
+def tangent_line(f, t, a):
+    b = f(t) - a * t
     return lambda x: a * x + b
 
 
