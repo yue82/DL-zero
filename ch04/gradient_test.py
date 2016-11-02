@@ -8,9 +8,9 @@ from grads import numerical_gradient
 def plt_grad(x0, x1, grad, save=False, filename='test.png'):
     plt.figure()
     plt.quiver(x0, x1, -grad[0], -grad[1],
-               angles="xy",color="#666666")
-    plt.xlim([-2, 2])
-    plt.ylim([-2, 2])
+               angles="xy", color="#666666", label='grad')
+    plt.xlim([min(x0), max(x0)])
+    plt.ylim([min(x1), max(x1)])
     plt.xlabel('x0')
     plt.ylabel('x1')
     plt.grid()
@@ -24,6 +24,7 @@ def plt_grad(x0, x1, grad, save=False, filename='test.png'):
 
 
 def func2(x):
+    # print(x.shape)
     if x.ndim == 1:
         return np.sum(x**2)
     else:
@@ -38,5 +39,7 @@ if __name__ == '__main__':
     x0 = x0.flatten()
     x1 = x1.flatten()
 
-    grad = numerical_gradient(func2, np.array([x0, x1]))
+    # grad_org = numerical_gradient(func2, np.array([x0, x1]))
+    # plt_grad(x0, x1, grad_org, save=True, filename='func2_grad_org.png')
+    grad = numerical_gradient(func2, np.array([x0, x1]).T).T
     plt_grad(x0, x1, grad, save=True, filename='func2_grad.png')
